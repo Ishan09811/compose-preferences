@@ -55,7 +55,7 @@ afterEvaluate {
                 from(components["release"])
 
                 groupId = "com.github.ishan09811"
-                artifactId = "materialswitch"
+                artifactId = "compose-preferences"
                 version = "1.0.0"
             }
         }
