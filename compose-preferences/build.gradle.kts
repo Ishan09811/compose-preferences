@@ -69,6 +69,7 @@ dependencies {
     implementation(libs.androidx.runtime)
     implementation(libs.androidx.foundation)
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.com.github.ishan09811.materialswitch)
     testImplementation(libs.junit)
     debugImplementation(libs.androidx.ui.tooling)
