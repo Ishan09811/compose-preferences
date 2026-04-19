@@ -1,0 +1,102 @@
+package com.github.ishan09811.compose_preferences.preference
+
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.PreviewLightDark
+import com.github.ishan09811.compose_preferences.R
+import com.github.ishan09811.compose_preferences.util.ComposePreview
+import com.github.ishan09811.compose_preferences.base.BasePreference
+import com.github.ishan09811.compose_preferences.core.PreferenceIcon
+import com.github.ishan09811.compose_preferences.core.PreferenceSubtitle
+import com.github.ishan09811.compose_preferences.core.PreferenceTitle
+
+/**
+ * A regular preference item.
+ * This is a simple preference item with a title, subtitle, leading icon, and trailing content.
+ * This can also be called a simple TextPreference.
+ * which is just a preference item, meant to show something to the user.
+ * or be used to navigate the user to another screen.
+ */
+
+@Composable
+fun RegularPreference(
+    title: @Composable () -> Unit,
+    modifier: Modifier = Modifier,
+    leadingIcon: @Composable (() -> Unit)? = null,
+    subtitle: @Composable (() -> Unit)? = null,
+    value: @Composable (() -> Unit)? = null,
+    trailingContent: @Composable (() -> Unit)? = null,
+    enabled: Boolean = true,
+    onClick: () -> Unit,
+    onLongClick: () -> Unit = {}
+) {
+    BasePreference(
+        title = title,
+        modifier = modifier,
+        subContent = subtitle,
+        value = value,
+        leadingContent = leadingIcon,
+        trailingContent = trailingContent,
+        enabled = enabled,
+        onClick = onClick,
+        onLongClick = onLongClick
+    )
+}
+
+@Composable
+fun RegularPreference(
+    title: String,
+    modifier: Modifier = Modifier,
+    leadingIcon: ImageVector? = null,
+    subtitle: @Composable (() -> Unit)? = null,
+    value: @Composable (() -> Unit)? = null,
+    trailingContent: @Composable (() -> Unit)? = null,
+    enabled: Boolean = true,
+    onClick: () -> Unit,
+    onLongClick: () -> Unit = {}
+) {
+    RegularPreference(
+        title = { PreferenceTitle(title = title) },
+        leadingIcon = { PreferenceIcon(icon = leadingIcon) },
+        modifier = modifier,
+        subtitle = subtitle,
+        value = value,
+        trailingContent = trailingContent,
+        enabled = enabled,
+        onClick = onClick,
+        onLongClick = onLongClick
+    )
+}
+
+@PreviewLightDark
+@Composable
+private fun RegularPreferencePreview() {
+    ComposePreview {
+        RegularPreference(
+            title = { Text("Install Firmware") },
+            leadingIcon = { Icon(painterResource(id = R.drawable.ic_settings), contentDescription = "Settings") },
+            subtitle = { PreferenceSubtitle(text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ullamcorper tempor imperdiet. Tempor magna proident pariatur nonumy iusto, sint laborum possim accumsan, elit nonummy facer enim autem eiusmod lobortis reprehenderit molestie vel esse aliquyam cupiditat velit nisi aliquid ipsum. Erat accusam reprehenderit. Feugiat aliquyam iure. Nisi ex officia.") },
+            trailingContent = { PreferenceIcon(icon = painterResource(id = R.drawable.ic_keyboard_arrow_right)) },
+            onClick = { }
+        )
+    }
+}
+
+@PreviewLightDark
+@Composable
+private fun RegularPreferenceDisabledPreview() {
+    ComposePreview {
+        RegularPreference(
+            title = { Text("Advanced Settings") },
+            leadingIcon = { Icon(painterResource(id = R.drawable.ic_settings), contentDescription = "Settings") },
+            subtitle = { PreferenceSubtitle(text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ullamcorper tempor imperdiet. Tempor magna proident pariatur nonumy iusto, sint laborum possim accumsan, elit nonummy facer enim autem eiusmod lobortis reprehenderit molestie vel esse aliquyam cupiditat velit nisi aliquid ipsum. Erat accusam reprehenderit. Feugiat aliquyam iure. Nisi ex officia.") },
+            trailingContent = { PreferenceIcon(icon = painterResource(id = R.drawable.ic_keyboard_arrow_right)) },
+            enabled = false,
+            onClick = { }
+        )
+    }
+}
