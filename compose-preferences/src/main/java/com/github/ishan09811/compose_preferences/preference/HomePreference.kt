@@ -2,20 +2,38 @@ package com.github.ishan09811.compose_preferences.preference
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.indication
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import com.github.ishan09811.compose_preferences.R
+import com.github.ishan09811.compose_preferences.core.PreferenceIcon
+import com.github.ishan09811.compose_preferences.util.ComposePreview
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -26,45 +44,80 @@ fun HomePreference(
     onClick: () -> Unit = {},
     onLongClick: () -> Unit = {}
 ) {
-    Card(
+    val interactionSource = remember { MutableInteractionSource() }
+
+    Surface(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 12.dp)
-            .padding(bottom = 24.dp)
-            .combinedClickable(
-                onClick = onClick,
-                onLongClick = onLongClick
+            .combinedClickable(onClick = onClick, onLongClick = onLongClick, interactionSource = interactionSource)
+            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .indication(
+                interactionSource = interactionSource,
+                indication = ripple()
             ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-        shape = MaterialTheme.shapes.medium
+        shape = RoundedCornerShape(24.dp),
+        color = MaterialTheme.colorScheme.surfaceContainer,
+        tonalElevation = 2.dp,
+        onClick = {}
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 10.dp, horizontal = 20.dp),
+                .padding(horizontal = 20.dp, vertical = 16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            icon.invoke()
+            Surface(
+                shape = CircleShape,
+                color = MaterialTheme.colorScheme.secondaryContainer
+            ) {
+                Box(
+                    modifier = Modifier.size(40.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CompositionLocalProvider(
+                        LocalContentColor provides MaterialTheme.colorScheme.onSecondaryContainer
+                    ) {
+                        icon()
+                    }
+                }
+            }
+
+            Spacer(modifier = Modifier.width(16.dp))
 
             Column(
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(start = 16.dp)
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.spacedBy(4.dp)
             ) {
                 Text(
                     text = title,
-                    style = MaterialTheme.typography.bodyMedium,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 16.sp
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.onSurface
                 )
 
                 Text(
                     text = description,
-                    style = MaterialTheme.typography.bodySmall,
-                    fontSize = 14.sp,
-                    modifier = Modifier.padding(top = 5.dp)
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
         }
+    }
+}
+
+@Preview
+@Composable
+fun PreviewHomePreference() {
+    ComposePreview {
+        var description by remember { mutableStateOf("Description") }
+
+        HomePreference(
+            title = "Title",
+            description = description,
+            icon = { PreferenceIcon(painterResource(R.drawable.ic_star)) },
+            onClick = {
+                description = "clicked"
+            },
+            onLongClick = { description = "long click" }
+        )
     }
 }

@@ -1,15 +1,20 @@
 package com.github.ishan09811.compose_preferences.preference
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.selection.selectable
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
@@ -24,18 +29,20 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import com.github.ishan09811.compose_preferences.R
-import com.github.ishan09811.compose_preferences.util.ComposePreview
 import com.github.ishan09811.compose_preferences.base.BaseDialogPreference
 import com.github.ishan09811.compose_preferences.core.PreferenceIcon
 import com.github.ishan09811.compose_preferences.core.PreferenceTitle
 import com.github.ishan09811.compose_preferences.core.PreferenceValue
+import com.github.ishan09811.compose_preferences.util.ComposePreview
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @Composable
 fun <T> SingleSelectionDialog(
@@ -91,16 +98,65 @@ fun <T> SingleSelectionDialog(
         icon = icon,
         title = title,
         content = {
-            LazyColumn(
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                items(
-                    items = values,
-                    key = key
+            val windowInfo = LocalWindowInfo.current
+            val density = LocalDensity.current
+
+            val maxHeight = with(density) {
+                windowInfo.containerSize.height.toDp() * 0.5f
+            }
+
+            val listState = rememberLazyListState()
+
+            val showTopDivider by remember {
+                derivedStateOf {
+                    listState.firstVisibleItemIndex > 0 ||
+                            listState.firstVisibleItemScrollOffset > 0
+                }
+            }
+
+            val showBottomDivider by remember {
+                derivedStateOf {
+                    val layoutInfo = listState.layoutInfo
+                    val lastVisibleItem = layoutInfo.visibleItemsInfo.lastOrNull()
+
+                    lastVisibleItem != null &&
+                            lastVisibleItem.index < layoutInfo.totalItemsCount - 1
+                }
+            }
+
+            Box(Modifier.heightIn(max = maxHeight)) {
+                LazyColumn(
+                    state = listState,
+                    modifier = Modifier.fillMaxWidth()
                 ) {
-                    item(it, currentValue) {
-                        onSelected(it)
+                    items(
+                        items = values,
+                        key = key
+                    ) {
+                        item(it, currentValue) {
+                            onSelected(it)
+                        }
                     }
+                }
+
+                AnimatedVisibility(
+                    visible = showTopDivider,
+                    modifier = Modifier.align(Alignment.TopCenter)
+                ) {
+                    HorizontalDivider(
+                        modifier = Modifier.fillMaxWidth(),
+                        color = MaterialTheme.colorScheme.outlineVariant
+                    )
+                }
+
+                AnimatedVisibility(
+                    visible = showBottomDivider,
+                    modifier = Modifier.align(Alignment.BottomCenter)
+                ) {
+                    HorizontalDivider(
+                        modifier = Modifier.fillMaxWidth(),
+                        color = MaterialTheme.colorScheme.outlineVariant
+                    )
                 }
             }
         }
@@ -172,12 +228,13 @@ private fun <T> DialogPreferenceItem(
                 enabled = true,
                 role = Role.RadioButton,
                 onClick = onClick
-            ),
+            )
+            .padding(horizontal = 24.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         RadioButton(
             selected = isSelected,
-            onClick = null // Since onClick is handled by the row
+            onClick = null
         )
 
         Spacer(modifier = Modifier.width(16.dp))
@@ -206,7 +263,7 @@ private fun SingleSelectionDialogPreview() {
             SingleSelectionDialog(
                 currentValue = currentValue,
                 onValueChange = { currentValue = it },
-                values = (1..10).toList(),
+                values = (1..20).toList(),
                 title = { PreferenceTitle("Choose a number") },
                 icon = { PreferenceIcon(painterResource(id = R.drawable.ic_star)) }
             )

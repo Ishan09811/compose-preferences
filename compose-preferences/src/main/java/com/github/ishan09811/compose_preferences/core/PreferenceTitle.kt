@@ -49,19 +49,17 @@ internal fun PreferenceValue(
     enabled: Boolean = LocalPreferenceState.current,
     maxLines: Int = 1,
     overflow: TextOverflow = TextOverflow.Ellipsis,
-    style: TextStyle = MaterialTheme.typography.labelMedium.copy(
-        fontSize = 13.sp,
-        fontWeight = FontWeight.Bold,
-    ),
-    color: Color = preferenceColor(enabled, LocalContentColor.current)
 ) {
     Text(
         text = text,
-        modifier = modifier.animateContentSize(),
-        style = style,
+        modifier = modifier,
+        style = MaterialTheme.typography.bodyMedium,
         maxLines = maxLines,
         overflow = overflow,
-        color = color,
+        color = if (enabled)
+            MaterialTheme.colorScheme.primary
+        else
+            MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.38f)
     )
 }
 

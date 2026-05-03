@@ -1,14 +1,16 @@
 package com.github.ishan09811.compose_preferences.base
 
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.AlertDialogDefaults
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.LocalContentColor
@@ -17,12 +19,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 
@@ -34,29 +36,19 @@ fun BaseDialogPreference(
     icon: @Composable (() -> Unit)? = null,
     title: @Composable (() -> Unit)? = null,
     content: @Composable (() -> Unit)? = null,
-    shape: Shape = AlertDialogDefaults.shape,
-    containerColor: Color = AlertDialogDefaults.containerColor,
-    iconContentColor: Color = AlertDialogDefaults.iconContentColor,
-    titleContentColor: Color = AlertDialogDefaults.titleContentColor,
-    contentColor: Color = AlertDialogDefaults.textContentColor,
-    tonalElevation: Dp = AlertDialogDefaults.TonalElevation,
     properties: DialogProperties = DialogProperties()
-) = BasicAlertDialog(
-    onDismissRequest = onDismissRequest,
-    modifier = modifier,
-    properties = properties
 ) {
-    DialogContent(
-        icon = icon,
-        title = title,
-        content = content,
-        shape = shape,
-        containerColor = containerColor,
-        tonalElevation = tonalElevation,
-        iconContentColor = iconContentColor,
-        titleContentColor = titleContentColor,
-        contentColor = contentColor
-    )
+    BasicAlertDialog(
+        onDismissRequest = onDismissRequest,
+        modifier = modifier,
+        properties = properties
+    ) {
+        DialogContent(
+            icon = icon,
+            title = title,
+            content = content
+        )
+    }
 }
 
 @Composable
@@ -64,66 +56,76 @@ private fun DialogContent(
     modifier: Modifier = Modifier,
     icon: (@Composable () -> Unit)?,
     title: (@Composable () -> Unit)?,
-    content: @Composable (() -> Unit)?,
-    shape: Shape,
-    containerColor: Color,
-    tonalElevation: Dp,
-    iconContentColor: Color,
-    titleContentColor: Color,
-    contentColor: Color,
+    content: @Composable (() -> Unit)?
 ) {
+    val scale by animateFloatAsState(
+        targetValue = 1f,
+        animationSpec = spring(dampingRatio = 0.8f)
+    )
+
+    val alpha by animateFloatAsState(
+        targetValue = 1f,
+        animationSpec = tween(220)
+    )
+
     Surface(
-        modifier = modifier,
-        shape = shape,
-        color = containerColor,
-        tonalElevation = tonalElevation
+        modifier = modifier
+            .graphicsLayer {
+                scaleX = scale
+                scaleY = scale
+                this.alpha = alpha
+            },
+        shape = RoundedCornerShape(28.dp),
+        color = MaterialTheme.colorScheme.surfaceContainerHigh,
+        tonalElevation = 6.dp
     ) {
         Column(
-            modifier = Modifier.padding(DialogPadding)
+            modifier = Modifier
+                .padding(vertical = 20.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                icon?.let {
-                    CompositionLocalProvider(value = LocalContentColor provides iconContentColor) {
-                        Box(
-                            modifier = Modifier
-                                .size(DialogIconSize)
-                                .align(Alignment.CenterVertically)
+            if (icon != null || title != null) {
+                Row(
+                    modifier = Modifier.padding(horizontal = 24.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    icon?.let {
+                        Surface(
+                            shape = CircleShape,
+                            color = MaterialTheme.colorScheme.secondaryContainer
                         ) {
-                            icon()
+                            Box(
+                                modifier = Modifier
+                                    .size(40.dp),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                CompositionLocalProvider(
+                                    LocalContentColor provides MaterialTheme.colorScheme.onSecondaryContainer
+                                ) {
+                                    icon()
+                                }
+                            }
                         }
                     }
-                }
-                title?.let {
-                    ProvideContentColorTextStyle(
-                        contentColor = titleContentColor,
-                        textStyle = MaterialTheme.typography.titleLarge
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .padding(DialogTitlePadding)
-                                .align(Alignment.CenterVertically)
-                        ) { title() }
+
+                    title?.let {
+                        ProvideContentColorTextStyle(
+                            contentColor = MaterialTheme.colorScheme.onSurface,
+                            textStyle = MaterialTheme.typography.titleLarge
+                        ) {
+                            title()
+                        }
                     }
                 }
             }
 
-
             content?.let {
-                val textStyle = MaterialTheme.typography.bodyLarge
                 ProvideContentColorTextStyle(
-                    contentColor = contentColor,
-                    textStyle = textStyle
+                    contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                    textStyle = MaterialTheme.typography.bodyLarge
                 ) {
-                    Box(
-                        Modifier
-                            .weight(weight = 1f, fill = false)
-                            .padding(DialogContentPadding)
-                            .align(Alignment.Start)
-                    ) {
+                    Box {
                         content()
                     }
                 }
@@ -146,9 +148,3 @@ fun ProvideContentColorTextStyle(
         content = content
     )
 }
-
-
-private val DialogPadding = PaddingValues(all = 16.dp)
-private val DialogIconSize = 36.dp
-private val DialogTitlePadding = PaddingValues(bottom = 8.dp)
-private val DialogContentPadding = PaddingValues(start = 8.dp, end = 8.dp, bottom = 12.dp)
