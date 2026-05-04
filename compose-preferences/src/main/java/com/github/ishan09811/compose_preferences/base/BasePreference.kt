@@ -88,8 +88,8 @@ fun BasePreference(
             ) {
                 leadingContent?.invoke()
                 Column(
-                    modifier = Modifier.weight(1f),
-                    verticalArrangement = Arrangement.spacedBy(4.dp, Alignment.CenterVertically),
+                    modifier = Modifier.weight(1f).padding(vertical = 12.dp),
+                    verticalArrangement = Arrangement.spacedBy(4.dp),
                 ) {
                     title()
                     subContent?.invoke()
