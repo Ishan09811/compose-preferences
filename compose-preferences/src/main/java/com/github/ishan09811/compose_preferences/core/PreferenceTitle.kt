@@ -25,11 +25,7 @@ internal fun PreferenceTitle(
     enabled: Boolean = LocalPreferenceState.current,
     maxLines: Int = 1,
     overflow: TextOverflow = TextOverflow.Ellipsis,
-    style: TextStyle = MaterialTheme.typography.headlineMedium.copy(
-        fontSize = 17.sp,
-        fontWeight = FontWeight.Normal,
-        lineHeight = 22.sp
-    ),
+    style: TextStyle = MaterialTheme.typography.bodyLarge,
     color: Color = preferenceColor(enabled, LocalContentColor.current)
 ) {
     Text(
@@ -70,7 +66,7 @@ internal fun PreferenceTitle(
     enabled: Boolean = LocalPreferenceState.current,
     maxLines: Int = 1,
     overflow: TextOverflow = TextOverflow.Ellipsis,
-    style: TextStyle = MaterialTheme.typography.titleMedium,
+    style: TextStyle = MaterialTheme.typography.bodyLarge,
     color: Color = preferenceColor(enabled, LocalContentColor.current)
 ) {
     Text(

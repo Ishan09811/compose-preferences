@@ -78,9 +78,7 @@ private fun RegularPreferencePreview() {
     ComposePreview {
         RegularPreference(
             title = { Text("Install Firmware") },
-            leadingIcon = { Icon(painterResource(id = R.drawable.ic_settings), contentDescription = "Settings") },
             subtitle = { PreferenceSubtitle(text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ullamcorper tempor imperdiet. Tempor magna proident pariatur nonumy iusto, sint laborum possim accumsan, elit nonummy facer enim autem eiusmod lobortis reprehenderit molestie vel esse aliquyam cupiditat velit nisi aliquid ipsum. Erat accusam reprehenderit. Feugiat aliquyam iure. Nisi ex officia.") },
-            trailingContent = { PreferenceIcon(icon = painterResource(id = R.drawable.ic_keyboard_arrow_right)) },
             onClick = { }
         )
     }
