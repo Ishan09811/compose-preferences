@@ -57,8 +57,7 @@ fun HomePreference(
             ),
         shape = RoundedCornerShape(24.dp),
         color = MaterialTheme.colorScheme.surfaceContainer,
-        tonalElevation = 2.dp,
-        onClick = {}
+        tonalElevation = 2.dp
     ) {
         Row(
             modifier = Modifier
