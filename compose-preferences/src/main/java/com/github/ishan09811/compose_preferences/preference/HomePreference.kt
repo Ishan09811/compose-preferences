@@ -1,7 +1,6 @@
 package com.github.ishan09811.compose_preferences.preference
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -31,6 +30,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.github.ishan09811.compose_preferences.R
 import com.github.ishan09811.compose_preferences.core.PreferenceIcon
+import com.github.ishan09811.compose_preferences.safeCombinedClickable
 import com.github.ishan09811.compose_preferences.util.ComposePreview
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -47,7 +47,7 @@ fun HomePreference(
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 8.dp)
             .clip(RoundedCornerShape(24.dp))
-            .combinedClickable(onClick = onClick, onLongClick = onLongClick),
+            .safeCombinedClickable(onClick = onClick, onLongClick = onLongClick),
         color = MaterialTheme.colorScheme.surfaceContainer,
         tonalElevation = 2.dp
     ) {
