@@ -17,7 +17,7 @@ import com.github.ishan09811.compose_preferences.util.preferenceColor
 import com.github.ishan09811.compose_preferences.util.preferenceSubtitleColor
 
 @Composable
-internal fun PreferenceTitle(
+fun PreferenceTitle(
     title: String,
     modifier: Modifier = Modifier,
     enabled: Boolean = LocalPreferenceState.current,
@@ -37,7 +37,7 @@ internal fun PreferenceTitle(
 }
 
 @Composable
-internal fun PreferenceValue(
+fun PreferenceValue(
     text: String,
     modifier: Modifier = Modifier,
     enabled: Boolean = LocalPreferenceState.current,
@@ -58,7 +58,7 @@ internal fun PreferenceValue(
 }
 
 @Composable
-internal fun PreferenceTitle(
+fun PreferenceTitle(
     title: AnnotatedString,
     modifier: Modifier = Modifier,
     enabled: Boolean = LocalPreferenceState.current,
