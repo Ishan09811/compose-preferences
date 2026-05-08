@@ -29,10 +29,10 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun SwitchPreference(
+    modifier: Modifier = Modifier,
     checked: Boolean,
     title: @Composable () -> Unit,
     leadingIcon: @Composable (() -> Unit)? = null,
-    modifier: Modifier = Modifier,
     subtitle: @Composable (() -> Unit)? = null,
     enabled: Boolean = true,
     switchColors: MaterialSwitchColors  = MaterialSwitchColors(
@@ -65,7 +65,7 @@ fun SwitchPreference(
                 val press = PressInteraction.Press(Offset.Zero)
                 interactionSource.emit(press)
 
-                delay(50)
+                delay(100)
 
                 interactionSource.emit(PressInteraction.Release(press))
 
@@ -78,10 +78,10 @@ fun SwitchPreference(
 
 @Composable
 fun SwitchPreference(
+    modifier: Modifier = Modifier,
     checked: Boolean,
     title: String,
     leadingIcon: ImageVector? = null,
-    modifier: Modifier = Modifier,
     subtitle: @Composable (() -> Unit)? = null,
     enabled: Boolean = true,
     switchColors: MaterialSwitchColors  = MaterialSwitchColors(
