@@ -55,7 +55,7 @@ afterEvaluate {
 
                 groupId = "io.github.ishan09811"
                 artifactId = "compose-preferences"
-                version = "0.4"
+                version = "0.4.1"
             }
         }
     }
