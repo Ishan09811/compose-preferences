@@ -20,11 +20,11 @@ import io.github.compose_preferences.util.preferenceSubtitleColor
 fun PreferenceTitle(
     title: String,
     modifier: Modifier = Modifier,
-    enabled: Boolean = _root_ide_package_.io.github.compose_preferences.LocalPreferenceState.current,
+    enabled: Boolean = LocalPreferenceState.current,
     maxLines: Int = 1,
     overflow: TextOverflow = TextOverflow.Ellipsis,
     style: TextStyle = MaterialTheme.typography.bodyLarge,
-    color: Color = _root_ide_package_.io.github.compose_preferences.util.preferenceColor(
+    color: Color = preferenceColor(
         enabled,
         LocalContentColor.current
     )
@@ -43,7 +43,7 @@ fun PreferenceTitle(
 fun PreferenceValue(
     text: String,
     modifier: Modifier = Modifier,
-    enabled: Boolean = _root_ide_package_.io.github.compose_preferences.LocalPreferenceState.current,
+    enabled: Boolean = LocalPreferenceState.current,
     maxLines: Int = 1,
     overflow: TextOverflow = TextOverflow.Ellipsis,
 ) {
@@ -64,11 +64,11 @@ fun PreferenceValue(
 fun PreferenceTitle(
     title: AnnotatedString,
     modifier: Modifier = Modifier,
-    enabled: Boolean = _root_ide_package_.io.github.compose_preferences.LocalPreferenceState.current,
+    enabled: Boolean = LocalPreferenceState.current,
     maxLines: Int = 1,
     overflow: TextOverflow = TextOverflow.Ellipsis,
     style: TextStyle = MaterialTheme.typography.bodyLarge,
-    color: Color = _root_ide_package_.io.github.compose_preferences.util.preferenceColor(
+    color: Color = preferenceColor(
         enabled,
         LocalContentColor.current
     )
@@ -87,11 +87,11 @@ fun PreferenceTitle(
 fun PreferenceSubtitle(
     text: String,
     modifier: Modifier = Modifier,
-    enabled: Boolean = _root_ide_package_.io.github.compose_preferences.LocalPreferenceState.current,
+    enabled: Boolean = LocalPreferenceState.current,
     maxLines: Int = 2,
     overflow: TextOverflow = TextOverflow.Ellipsis,
     style: TextStyle = MaterialTheme.typography.bodyMedium,
-    color: Color = _root_ide_package_.io.github.compose_preferences.util.preferenceSubtitleColor(
+    color: Color = preferenceSubtitleColor(
         enabled,
         LocalContentColor.current
     ),
@@ -110,11 +110,11 @@ fun PreferenceSubtitle(
 fun PreferenceSubtitle(
     text: AnnotatedString,
     modifier: Modifier = Modifier,
-    enabled: Boolean = _root_ide_package_.io.github.compose_preferences.LocalPreferenceState.current,
+    enabled: Boolean = LocalPreferenceState.current,
     maxLines: Int = 2,
     overflow: TextOverflow = TextOverflow.Ellipsis,
     style: TextStyle = MaterialTheme.typography.bodyMedium,
-    color: Color = _root_ide_package_.io.github.compose_preferences.util.preferenceSubtitleColor(
+    color: Color = preferenceSubtitleColor(
         enabled,
         LocalContentColor.current
     ),

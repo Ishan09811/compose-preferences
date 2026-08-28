@@ -16,9 +16,9 @@ import io.github.compose_preferences.util.sizeIn
 fun PreferenceIcon(
     icon: ImageVector?,
     modifier: Modifier = Modifier,
-    enabled: Boolean = _root_ide_package_.io.github.compose_preferences.LocalPreferenceState.current,
+    enabled: Boolean = LocalPreferenceState.current,
     contentDescription: String? = null,
-    tint: Color = _root_ide_package_.io.github.compose_preferences.util.preferenceColor(
+    tint: Color = preferenceColor(
         enabled,
         LocalContentColor.current
     ),
@@ -37,9 +37,9 @@ fun PreferenceIcon(
 fun PreferenceIcon(
     icon: Painter?,
     modifier: Modifier = Modifier,
-    enabled: Boolean = _root_ide_package_.io.github.compose_preferences.LocalPreferenceState.current,
+    enabled: Boolean = LocalPreferenceState.current,
     contentDescription: String? = null,
-    tint: Color = _root_ide_package_.io.github.compose_preferences.util.preferenceColor(
+    tint: Color = preferenceColor(
         enabled,
         LocalContentColor.current
     ),

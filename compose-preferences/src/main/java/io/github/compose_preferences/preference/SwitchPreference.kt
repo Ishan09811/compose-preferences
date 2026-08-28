@@ -65,11 +65,8 @@ fun SwitchPreference(
             scope.launch {
                 val press = PressInteraction.Press(Offset.Zero)
                 interactionSource.emit(press)
-
                 delay(100.milliseconds)
-
                 interactionSource.emit(PressInteraction.Release(press))
-
                 onValueUpdated(!checked)
             }
         },
