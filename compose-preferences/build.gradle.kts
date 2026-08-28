@@ -1,13 +1,12 @@
 plugins {
     alias(libs.plugins.androidLibrary)
-    alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.composeCompiler)
     id("maven-publish")
 }
 
 android {
-    namespace = "com.github.ishan09811.compose_preferences"
-    compileSdk = 36
+    namespace = "io.github.compose_preferences"
+    compileSdk = 37
 
     defaultConfig {
         minSdk = 29
@@ -54,7 +53,7 @@ afterEvaluate {
             create<MavenPublication>("release") {
                 from(components["release"])
 
-                groupId = "com.github.ishan09811"
+                groupId = "io.github.ishan09811"
                 artifactId = "compose-preferences"
                 version = "0.4"
             }

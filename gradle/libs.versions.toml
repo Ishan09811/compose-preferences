@@ -1,15 +1,16 @@
 [versions]
-agp = "8.13.2"
-androidx-appcompat = "1.7.1"
-androidx-core = "1.18.0"
+agp = "9.3.2"
+androidx-appcompat = "1.8.0"
+androidx-core = "1.19.0"
 androidx-espresso = "3.7.0"
 androidx-testExt = "1.3.0"
 junit = "4.13.2"
-kotlin = "2.3.21"
-material = "1.13.0"
-runtime = "1.11.1"
-foundation = "1.11.1"
-uiTooling = "1.11.1"
+kotlin = "2.4.10"
+material = "1.14.0"
+material3 = "1.4.0"
+runtime = "1.12.0"
+foundation = "1.12.0"
+uiTooling = "1.12.0"
 materialSwitch = "1.0.1"
 
 [libraries]
@@ -22,7 +23,7 @@ androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "a
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 androidx-runtime = { group = "androidx.compose.runtime", name = "runtime", version.ref = "runtime" }
 androidx-foundation = { group = "androidx.compose.foundation", name = "foundation", version.ref = "foundation" }
-androidx-material3 = { module = "androidx.compose.material3:material3" }
+androidx-material3 = { module = "androidx.compose.material3:material3", version.ref = "material3" }
 androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling", version.ref = "uiTooling" }
 com-github-ishan09811-materialswitch = { group = "com.github.Ishan09811", name = "materialswitch", version.ref = "materialSwitch" }
 
@@ -30,4 +31,3 @@ com-github-ishan09811-materialswitch = { group = "com.github.Ishan09811", name =
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
 composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
-kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
