@@ -22,8 +22,8 @@ import io.github.compose_preferences.core.PreferenceIcon
 import io.github.compose_preferences.core.PreferenceSubtitle
 import io.github.compose_preferences.core.PreferenceTitle
 import io.github.compose_preferences.util.ComposePreview
-import com.github.ishan09811.materialswitch.MaterialSwitch
-import com.github.ishan09811.materialswitch.MaterialSwitchColors
+import io.github.materialswitch.MaterialSwitch
+import io.github.materialswitch.MaterialSwitchColors
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.time.Duration.Companion.milliseconds

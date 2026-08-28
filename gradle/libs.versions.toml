@@ -11,7 +11,7 @@ material3 = "1.4.0"
 runtime = "1.12.0"
 foundation = "1.12.0"
 uiTooling = "1.12.0"
-materialSwitch = "1.0.1"
+materialSwitch = "1.0.3"
 
 [libraries]
 androidx-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
